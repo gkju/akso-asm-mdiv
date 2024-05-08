@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Skrypt ilustruje rożnice pomiędzy rodzajem zastosowanych nawiasów do grupowania poleceń.
+
+variable1=VALUE_1
+echo Wartość zmiennej to $variable1.
+
+# Uruchamiamy kopię interpretera poleceń.
+(variable1=VALUE_2)
+echo Wartość zmiennej po przypisaniu w nawiasach okrągłych to $variable1.
+
+# Zmienianie wartości w aktualnym środowisku.
+{ variable1=VALUE_3; }
+echo Wartość zmiennej po przypisaniu w nawiasach klamrowych to $variable1.
+
+# Wypisuje wynik sprawdzenia, czy właśnie urochomiony skrypt istnieje.
+[ -e "$0" ]; echo Polecenie w pojedynczych nawiasach prostokątnych zakończyło się wynikiem $?.
+
+# Wypisuje wynik polecenia ujętego w podwójne nawiasy kwadratowe.
+[[ 1 < 2 ]]; echo Polecenie w podwójnych nawiasach prostokątnych zakończyło się wynikiem $?.

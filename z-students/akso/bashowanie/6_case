@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Skrypt ilustruje wykorzystanie polecenia case do zamiany liczby z zakresu od 1 do 99 na jej słowny zapis.
+
+if [[ -z "$1" ]] # Sprawdza, czy pierwszy parametr jest pusty.
+then
+  echo Podaj liczbę.
+elif (($1 < 1 || $1 > 99))
+then
+  echo Podaj liczbę z zakresu od 1 do 99.
+else
+  case $1 in
+    10) echo dziesięc;;
+    11) echo jedenaście;;
+    12) echo dwanaście;;
+    13) echo trzynaście;;
+    14) echo czternaście;;
+    15) echo pietnaście;;
+    16) echo szesnaście;;
+    17) echo siedemnaście;;
+    18) echo osiemnaście;;
+    19) echo dziewiętnaście;;
+    2?) echo -n dwadzieścia" ";;
+    3?) echo -n trzydzieści" ";;
+    4?) echo -n czterdzieści" ";;
+    5?) echo -n pięćdziesiąt" ";;
+    6?) echo -n sześćdziesiąt" ";;
+    7?) echo -n siedemdziesiąt" ";;
+    8?) echo -n osiemdziesiąt" ";;
+    9?) echo -n dziewięćdziesiąt" ";;
+  esac
+  if (($1 < 10 || $1 > 19))
+  then
+    case $1 in
+      *0) echo;;
+      *1) echo jeden;;
+      *2) echo dwa;;
+      *3) echo trzy;;
+      *4) echo cztery;;
+      *5) echo pięć;;
+      *6) echo sześć;;
+      *7) echo siedem;;
+      *8) echo osiem;;
+      *9) echo dziewięć;;
+    esac
+  fi
+fi

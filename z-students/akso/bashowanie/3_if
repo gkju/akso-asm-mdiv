@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Skrypt wywołuje edytor vim, tworząc zapasową kopię edytowanego pliku.
+# Jeśli plik nie istniał, to zostanie utworzony.
+
+if (($# == 1)) # Sprawdzamy, czy podano dokładnie jeden parametr.
+then
+  # Sprawdzamy, czy plik o pdanej nazwie istnieje i czy jest to zwykły plik
+  # (operator -f), czy użytkownik ma do niego prawo zapisu (operator -w).
+  # Analogicznie za pomocą operatora -x można spawdzić, czy użytkownik ma prawo
+  # wykonywania pliku, a za pomocą operatora -s, czy plik jest niepusty itp.
+  if [[ -f "$1" && -w "$1" ]]
+  then
+    cp "$1" "$1".bak
+  fi
+  vim "$1"
+else
+  echo Podaj nazwę pliku do edytowania.
+fi

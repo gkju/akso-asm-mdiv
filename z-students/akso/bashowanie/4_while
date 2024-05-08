@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Skrypt sprawdza, czy użytkownik $1 pracuje w systemie i jeśli nie, to usypia
+# proces na 3 sekundy i ponawia sprawdzenie. Zakończenie przez CTRL-C.
+
+if (($# != 1))
+then
+  echo "Podaj nazwę użytkownika."
+else
+  while ((`who | grep -w "$1" | wc -l` == 0)) # Uwaga na znaki `...`! Co by było bez nich?
+  do
+    echo "Użytkownik $1 jeszcze nie pracuje."
+    sleep 3
+  done
+  echo "Użytkownik $1 pracuje."
+fi

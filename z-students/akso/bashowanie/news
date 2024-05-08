@@ -1,0 +1,3 @@
+#!/bin/bash
+
+curl https://feeds.bbci.co.uk/news/world/europe/rss.xml | grep -E '(title>|description>)' | sed -e 's/<title>//' -e 's/<description>//' -e 's/<![CDATA[//' -e 's/]]>//' -e 's/</title>//' -e 's/</description>//'

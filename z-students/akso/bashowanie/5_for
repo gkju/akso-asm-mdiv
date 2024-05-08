@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Skrypt podaje rozmiary plików, których nazwy zostały podane jako jego parametry.
+
+if [[ -n "$1" ]] # Sprawdzamy, czy pierwszy parametr skryptu jest niepusty (operator -n).
+then
+  for k in 1 2            # To jest podstawowa postać pętli for.
+  do
+    echo "Obrót $k pętli"
+    for j                 # To jest specjalna postać pętli for: j przebiega listę parametrów.
+    do
+      du -b "$j"
+    done
+  done
+else
+  echo Podaj nazwy plików lub katalogów.
+fi
