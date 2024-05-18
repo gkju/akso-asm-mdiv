@@ -11,4 +11,4 @@ mdiv_example: mdiv_example.o mdiv.o
 all: mdiv_example
 
 clean:
-	-rm mdiv_example *.o *.so
+	@rm *.o *.so

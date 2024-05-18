@@ -9,34 +9,30 @@ mdiv:
     ; Zapiszemy w r11 najbardziej znaczący blok x, aby odpowiednio zmienić znak reszty i wyniku
     mov r11, r8
     test r8, r8
+    mov rcx, 0
+    mov r10, -1
     js .convert_2compl
     jmp .mdiv_after_first_abs
 
-; Zostanie wywołane wtw. gdy mamy do czynienia z ujemną liczbą, więc musimy znaleźć niezerowy blok
-.find_first_nonzero:
+.convert_2compl:
     inc r10
+    cmp r10, rsi
+    jg .convert_2_compl_callback
     mov rax, [ rdi + r10*8 ]
     test rax, rax
-    jz .find_first_nonzero
-    jmp .convert_2compl_after_found
+    jz .convert_2compl
+    mov r9, r10
 
 .negate_loop:
     not qword [ rdi + r10*8 ]
     inc r10
     cmp r10, rsi
     jle .negate_loop
-    jmp .convert_2_compl_callback
-
-.convert_2compl:
-    mov r10, -1
-    jmp .find_first_nonzero
-
-.convert_2compl_after_found:
-    mov r9, r10
-    jmp .negate_loop
+    inc qword [ rdi + r9*8]
 
 .convert_2_compl_callback:
-    inc qword [ rdi + r9*8]
+    test rcx, rcx
+    jnz .exit
 
 .mdiv_after_first_abs:
     xor r8, rdx
@@ -78,26 +74,10 @@ mdiv:
 .mdiv_convert_2compl:
     mov r10, -1
     test r8, r8
-    js .convert_to_2compl
+    mov rcx, 1
+    js .convert_2compl
     jmp .exit
 
-.convert_to_2compl:
-    inc r10
-    cmp r10, rsi
-    jg .exit
-    mov rax, [ rdi + r10*8 ]
-    test rax, rax
-    jz .convert_to_2compl
-    mov r9, r10
-
-.negate_loop_2:
-    not qword [ rdi + r10*8 ]
-    inc r10
-    cmp r10, rsi
-    jle .negate_loop_2
-    inc qword [ rdi + r9*8]
-    jmp .exit
-    
 .exit:
     mov rax, rdx
     ret
