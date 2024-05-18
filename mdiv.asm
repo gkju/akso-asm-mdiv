@@ -61,6 +61,9 @@ mdiv:
 
 .mdiv_after_divide:
     mov rax, [ rdi + rsi*8 ]
+    ; Dla ujemnego wyniku mamy gwarancje, że wynik się zmieści.
+    test r8, r8
+    js .mdiv_after_divide_nooverflow
     test rax, rax
     js .raise_zero
 
@@ -100,7 +103,6 @@ mdiv:
     ret
 
 .raise_zero:
-    ; int 0
     mov rcx, 0
     div rcx
     ret
